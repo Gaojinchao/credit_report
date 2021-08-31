@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicPositionIndustryMapper">
+    
+    <resultMap type="BasicPositionIndustry" id="BasicPositionIndustryResult">
+        <result property="id"    column="id"    />
+        <result property="project"    column="project"    />
+        <result property="year"    column="year"    />
+        <result property="context"    column="context"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="one" column="one" />
+        <result property="two" column="two" />
+        <result property="three" column="three" />
+    </resultMap>
+
+    <sql id="selectBasicPositionIndustryVo">
+        select id, project, year, context, create_time, update_time,one,two,three, order_sn from basic_position_industry
+    </sql>
+
+    <select id="selectBasicPositionIndustryList" parameterType="BasicPositionIndustry" resultMap="BasicPositionIndustryResult">
+        <include refid="selectBasicPositionIndustryVo"/>
+        <where>  
+            <if test="project != null  and project != ''"> and project = #{project}</if>
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="context != null  and context != ''"> and context = #{context}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicPositionIndustryById" parameterType="Long" resultMap="BasicPositionIndustryResult">
+        <include refid="selectBasicPositionIndustryVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicPositionIndustryByOrdersn" parameterType="string" resultMap="BasicPositionIndustryResult">
+        <include refid="selectBasicPositionIndustryVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicPositionIndustry" parameterType="BasicPositionIndustry" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_position_industry
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="project != null">project,</if>
+            <if test="year != null">year,</if>
+            <if test="context != null">context,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="one !=null">one,</if>
+            <if test="two !=null">two,</if>
+            <if test="three !=null">three,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="project != null">#{project},</if>
+            <if test="year != null">#{year},</if>
+            <if test="context != null">#{context},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="one !=null">#{one},</if>
+            <if test="two !=null">#{two},</if>
+            <if test="three !=null">#{three},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicPositionIndustry" parameterType="BasicPositionIndustry">
+        update basic_position_industry
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="project != null">project = #{project},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="context != null">context = #{context},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="one !=null">one=#{one},</if>
+            <if test="two !=null">two=#{two},</if>
+            <if test="three !=null">three=#{three},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicPositionIndustryById" parameterType="Long">
+        delete from basic_position_industry where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicPositionIndustryByIds" parameterType="String">
+        delete from basic_position_industry where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicPositionIndustryByOrdersn" >
+         delete from basic_position_industry where order_sn=#{ordersn}
+    </delete>
+</mapper>

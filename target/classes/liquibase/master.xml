@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!--证书商品分类表-->
+<!--    <include file="classpath:liquibase/change_log/certificate_classify.xml" relativeToChangelogFile="false"/>-->
+
+    <!--公司管理-->
+    <include file="classpath:liquibase/change_log/company.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:liquibase/change_log/order_form.xml" relativeToChangelogFile="false" />
+
+    <!--生成信用报告-->
+    <include file="classpath:liquibase/change_log/baisc_contract_disputes.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_credit_record.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_data_table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_embranchment_org.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_employee_condition.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_executed_enterprise.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_historic_evolution.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_history_class.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_honor.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_information.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_judicative_paper.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_main_manager.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_main_run_manager.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_patent_information.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_position_industry.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_promise_enterprise.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_qualification_information.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_scholarship_prize.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_shareholder.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_software_copyright.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_system_information.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_win_bidding.xml" relativeToChangelogFile="false" />
+
+    <!--行业信息的录入-->
+    <include file="classpath:liquibase/change_log/behavioral_indicator.xml" relativeToChangelogFile="false" />
+    <include file="classpath:liquibase/change_log/basic_branch_org.xml" relativeToChangelogFile="false" />
+    
+    <!--著作权-->
+    <include file="classpath:liquibase/change_log/basic_copyright.xml" relativeToChangelogFile="false" />
+
+</databaseChangeLog>

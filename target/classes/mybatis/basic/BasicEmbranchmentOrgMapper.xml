@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicEmbranchmentOrgMapper">
+    
+    <resultMap type="BasicEmbranchmentOrg" id="BasicEmbranchmentOrgResult">
+        <result property="id"    column="id"    />
+        <result property="legalPerson"    column="legal_person"    />
+        <result property="realCapil"    column="real_capil"    />
+        <result property="realCapilScale"    column="real_capil_scale"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicEmbranchmentOrgVo">
+        select id, legal_person, real_capil, real_capil_scale, create_time, update_time, order_sn,org_name from basic_embranchment_org
+    </sql>
+
+    <select id="selectBasicEmbranchmentOrgList" parameterType="BasicEmbranchmentOrg" resultMap="BasicEmbranchmentOrgResult">
+        <include refid="selectBasicEmbranchmentOrgVo"/>
+        <where>  
+            <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
+            <if test="realCapil != null "> and real_capil = #{realCapil}</if>
+            <if test="realCapilScale != null "> and real_capil_scale = #{realCapilScale}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicEmbranchmentOrgById" parameterType="Long" resultMap="BasicEmbranchmentOrgResult">
+        <include refid="selectBasicEmbranchmentOrgVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicEmbranchmentOrg" parameterType="BasicEmbranchmentOrg" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_embranchment_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="legalPerson != null">legal_person,</if>
+            <if test="realCapil != null">real_capil,</if>
+            <if test="realCapilScale != null">real_capil_scale,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="orgName != null">org_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="legalPerson != null">#{legalPerson},</if>
+            <if test="realCapil != null">#{realCapil},</if>
+            <if test="realCapilScale != null">#{realCapilScale},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="orgName != null">#{orgName},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateBasicEmbranchmentOrg" parameterType="BasicEmbranchmentOrg">
+        update basic_embranchment_org
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="legalPerson != null">legal_person = #{legalPerson},</if>
+            <if test="realCapil != null">real_capil = #{realCapil},</if>
+            <if test="realCapilScale != null">real_capil_scale = #{realCapilScale},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicEmbranchmentOrgById" parameterType="Long">
+        delete from basic_embranchment_org where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicEmbranchmentOrgByIds" parameterType="String">
+        delete from basic_embranchment_org where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

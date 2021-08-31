@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicPatentInformationMapper">
+    
+    <resultMap type="BasicPatentInformation" id="BasicPatentInformationResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pubCode"    column="pub_code"    />
+        <result property="licenceissuingAuth"    column="licenceIssuing_auth"    />
+        <result property="periodValidity"    column="period_validity"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicPatentInformationVo">
+        select id, name, pub_code, licenceIssuing_auth, period_validity, create_time, update_time, order_sn from basic_patent_information
+    </sql>
+
+    <select id="selectBasicPatentInformationList" parameterType="BasicPatentInformation" resultMap="BasicPatentInformationResult">
+        <include refid="selectBasicPatentInformationVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and `name` like concat('%', #{name}, '%')</if>
+            <if test="pubCode != null  and pubCode != ''"> and pub_code = #{pubCode}</if>
+            <if test="licenceissuingAuth != null  and licenceissuingAuth != ''"> and licenceIssuing_auth = #{licenceissuingAuth}</if>
+            <if test="periodValidity != null  and periodValidity != ''"> and period_validity = #{periodValidity}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicPatentInformationById" parameterType="Long" resultMap="BasicPatentInformationResult">
+        <include refid="selectBasicPatentInformationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicPatentInformation" parameterType="BasicPatentInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_patent_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">`name`,</if>
+            <if test="pubCode != null">pub_code,</if>
+            <if test="licenceissuingAuth != null">licenceIssuing_auth,</if>
+            <if test="periodValidity != null">period_validity,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="pubCode != null">#{pubCode},</if>
+            <if test="licenceissuingAuth != null">#{licenceissuingAuth},</if>
+            <if test="periodValidity != null">#{periodValidity},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicPatentInformation" parameterType="BasicPatentInformation">
+        update basic_patent_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">`name` = #{name},</if>
+            <if test="pubCode != null">pub_code = #{pubCode},</if>
+            <if test="licenceissuingAuth != null">licenceIssuing_auth = #{licenceissuingAuth},</if>
+            <if test="periodValidity != null">period_validity = #{periodValidity},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicPatentInformationById" parameterType="Long">
+        delete from basic_patent_information where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicPatentInformationByIds" parameterType="String">
+        delete from basic_patent_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

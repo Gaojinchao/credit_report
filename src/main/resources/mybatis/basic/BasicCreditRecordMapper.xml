@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicCreditRecordMapper">
+    
+    <resultMap type="BasicCreditRecord" id="BasicCreditRecordResult">
+        <result property="id"    column="id"    />
+        <result property="punishInfo"    column="punish_info"    />
+        <result property="punishType"    column="punish_type"    />
+        <result property="context"    column="context"    />
+        <result property="dcertificateDate"    column="dcertificate_date"    />
+        <result property="moveDate"    column="move_date"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicCreditRecordVo">
+        select id, punish_info, punish_type, context, dcertificate_date, move_date, create_time, update_time, order_sn from basic_credit_record
+    </sql>
+
+    <select id="selectBasicCreditRecordList" parameterType="BasicCreditRecord" resultMap="BasicCreditRecordResult">
+        <include refid="selectBasicCreditRecordVo"/>
+        <where>  
+            <if test="punishInfo != null  and punishInfo != ''"> and punish_info = #{punishInfo}</if>
+            <if test="punishType != null  and punishType != ''"> and punish_type = #{punishType}</if>
+            <if test="context != null  and context != ''"> and context = #{context}</if>
+            <if test="dcertificateDate != null  and dcertificateDate != ''"> and dcertificate_date = #{dcertificateDate}</if>
+            <if test="moveDate != null  and moveDate != ''"> and move_date = #{moveDate}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicCreditRecordById" parameterType="Long" resultMap="BasicCreditRecordResult">
+        <include refid="selectBasicCreditRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicCreditRecord" parameterType="BasicCreditRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_credit_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="punishInfo != null">punish_info,</if>
+            <if test="punishType != null">punish_type,</if>
+            <if test="context != null">context,</if>
+            <if test="dcertificateDate != null">dcertificate_date,</if>
+            <if test="moveDate != null">move_date,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="punishInfo != null">#{punishInfo},</if>
+            <if test="punishType != null">#{punishType},</if>
+            <if test="context != null">#{context},</if>
+            <if test="dcertificateDate != null">#{dcertificateDate},</if>
+            <if test="moveDate != null">#{moveDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicCreditRecord" parameterType="BasicCreditRecord">
+        update basic_credit_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="punishInfo != null">punish_info = #{punishInfo},</if>
+            <if test="punishType != null">punish_type = #{punishType},</if>
+            <if test="context != null">context = #{context},</if>
+            <if test="dcertificateDate != null">dcertificate_date = #{dcertificateDate},</if>
+            <if test="moveDate != null">move_date = #{moveDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicCreditRecordById" parameterType="Long">
+        delete from basic_credit_record where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicCreditRecordByIds" parameterType="String">
+        delete from basic_credit_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

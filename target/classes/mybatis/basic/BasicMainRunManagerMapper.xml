@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicMainRunManagerMapper">
+    
+    <resultMap type="BasicMainRunManager" id="BasicMainRunManagerResult">
+        <result property="id"    column="id"    />
+        <result property="post"    column="post"    />
+        <result property="age"    column="age"    />
+        <result property="education"    column="education"    />
+        <result property="rank"    column="rank"    />
+        <result property="entirEperiod"    column="entir_eperiod"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="mainRunName" column="main_run_name"/>
+    </resultMap>
+
+    <sql id="selectBasicMainRunManagerVo">
+        select id, post, age, education, rank, entir_eperiod, create_time, update_time, order_sn,main_run_name from basic_main_run_manager
+    </sql>
+
+    <select id="selectBasicMainRunManagerList" parameterType="BasicMainRunManager" resultMap="BasicMainRunManagerResult">
+        <include refid="selectBasicMainRunManagerVo"/>
+        <where>  
+            <if test="post != null  and post != ''"> and post = #{post}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="education != null  and education != ''"> and education = #{education}</if>
+            <if test="rank != null  and rank != ''"> and rank = #{rank}</if>
+            <if test="entirEperiod != null "> and entir_eperiod = #{entirEperiod}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicMainRunManagerById" parameterType="Long" resultMap="BasicMainRunManagerResult">
+        <include refid="selectBasicMainRunManagerVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicMainRunManagerByOrdersn" parameterType="string" resultMap="BasicMainRunManagerResult">
+        <include refid="selectBasicMainRunManagerVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicMainRunManager" parameterType="BasicMainRunManager" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_main_run_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="post != null">post,</if>
+            <if test="age != null">age,</if>
+            <if test="education != null">education,</if>
+            <if test="rank != null">rank,</if>
+            <if test="entirEperiod != null">entir_eperiod,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="mainRunName != null">main_run_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="post != null">#{post},</if>
+            <if test="age != null">#{age},</if>
+            <if test="education != null">#{education},</if>
+            <if test="rank != null">#{rank},</if>
+            <if test="entirEperiod != null">#{entirEperiod},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="mainRunName != null">#{mainRunName},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateBasicMainRunManager" parameterType="BasicMainRunManager">
+        update basic_main_run_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="post != null">post = #{post},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="education != null">education = #{education},</if>
+            <if test="rank != null">rank = #{rank},</if>
+            <if test="entirEperiod != null">entir_eperiod = #{entirEperiod},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="mainRunName != null">main_run_name =#{mainRunName},</if>
+
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicMainRunManagerById" parameterType="Long">
+        delete from basic_main_run_manager where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicMainRunManagerByIds" parameterType="String">
+        delete from basic_main_run_manager where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicMainRunManagerByOrdersn">
+        delete from basic_main_run_manager where order_sn=#{ordersn}
+    </delete>
+</mapper>

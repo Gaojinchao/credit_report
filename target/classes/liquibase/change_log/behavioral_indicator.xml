@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="behavioral_indicator" value="true" dbms="mysql"/>
+    <changeSet id="behavioral_indicator_01" author="alfred.zong" >
+        <createTable tableName="behavioral_indicator" remarks="行业指标">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="code" type="varchar(100)" remarks="编号" />
+            <column name="name" type="varchar(100)" remarks="名称" />
+            <column name="operating_growth_rate" type="varchar(20)" remarks="营业增长率" />
+            <column name="growth_rate_operating_profit" type="varchar(20)" remarks="营业利润增长率" />
+            <column name="develop_capital_accumulation" type="varchar(20)" remarks="发展能力的资本积累率" />
+            <column name="asset_liability_ratio" type="varchar(20)" remarks="资产负债率" />
+            <column name="cash_flow_liability_ratio" type="varchar(20)" remarks="现金流动负债比率" />
+            <column name="quick_ratio" type="varchar(20)" remarks="速动比率" />
+            <column name="times_interest_earned" type="varchar(20)" remarks="利息保障倍数" />
+            <column name="turnover_total_capital" type="varchar(20)" remarks="总资产周转率" />
+            <column name="turnover_account_receivable" type="varchar(20)" remarks="应收账款周转率" />
+            <column name="velocity_liquid_assets" type="varchar(20)" remarks="流动资产周转率" />
+            <column name="return_equity" type="varchar(20)" remarks="净资产收益率" />
+            <column name="sales_operating_profit" type="varchar(20)" remarks="销售（营业）利润率" />
+            <column name="earned_protection_multiple" type="varchar(20)" remarks="盈余现金保障倍数" />
+            <column name="sales_business_growth_rate" type="varchar(20)" remarks="销售（营业）增长率" />
+            <column name="sales_operating_growth_rate" type="varchar(20)" remarks="销售（营业）利润增长率" />
+            <column name="rate_capital_accumulation" type="varchar(20)" remarks="资本积累率" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    <changeSet id="behavioral_indicator_02" author="alfred.zong">
+        <sql>
+            alter table behavioral_indicator modify column operating_growth_rate varchar(100);
+            alter table behavioral_indicator modify column growth_rate_operating_profit varchar(100);
+            alter table behavioral_indicator modify column develop_capital_accumulation varchar(100);
+            alter table behavioral_indicator modify column asset_liability_ratio varchar(100);
+            alter table behavioral_indicator modify column cash_flow_liability_ratio varchar(100);
+            alter table behavioral_indicator modify column quick_ratio varchar(100);
+            alter table behavioral_indicator modify column times_interest_earned varchar(100);
+            alter table behavioral_indicator modify column turnover_total_capital varchar(100);
+            alter table behavioral_indicator modify column turnover_account_receivable varchar(100);
+            alter table behavioral_indicator modify column velocity_liquid_assets varchar(100);
+            alter table behavioral_indicator modify column return_equity varchar(100);
+            alter table behavioral_indicator modify column sales_operating_profit varchar(100);
+            alter table behavioral_indicator modify column earned_protection_multiple varchar(100);
+            alter table behavioral_indicator modify column sales_business_growth_rate varchar(100);
+            alter table behavioral_indicator modify column sales_operating_growth_rate varchar(100);
+            alter table behavioral_indicator modify column rate_capital_accumulation varchar(100);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

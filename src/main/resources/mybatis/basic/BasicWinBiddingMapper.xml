@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicWinBiddingMapper">
+
+    <resultMap type="BasicWinBidding" id="BasicWinBiddingResult">
+        <result property="id" column="id"/>
+        <result property="project" column="project"/>
+        <result property="proprietor" column="proprietor"/>
+        <result property="surveytime" column="surveytime"/>
+        <result property="surveyway" column="surveyway"/>
+        <result property="state" column="state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="orderSn" column="order_sn"/>
+    </resultMap>
+
+    <sql id="selectBasicWinBiddingVo">
+        select id, project, proprietor, surveytime, surveyway, state, create_time, update_time, order_sn from basic_win_bidding
+    </sql>
+
+    <select id="selectBasicWinBiddingList" parameterType="BasicWinBidding" resultMap="BasicWinBiddingResult">
+        <include refid="selectBasicWinBiddingVo"/>
+        <where>
+            <if test="project != null  and project != ''">and project = #{project}</if>
+            <if test="proprietor != null  and proprietor != ''">and proprietor = #{proprietor}</if>
+            <if test="surveytime != null  and surveytime != ''">and surveytime = #{surveytime}</if>
+            <if test="surveyway != null  and surveyway != ''">and surveyway = #{surveyway}</if>
+            <if test="state != null  and state != ''">and state = #{state}</if>
+            <if test="orderSn != null  and orderSn != ''">and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+
+    <select id="selectBasicWinBiddingById" parameterType="Long" resultMap="BasicWinBiddingResult">
+        <include refid="selectBasicWinBiddingVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicWinBiddingByOrdersn" parameterType="string" resultMap="BasicWinBiddingResult">
+        <include refid="selectBasicWinBiddingVo"/>
+        where order_sn = #{ordersn}
+    </select>
+    <insert id="insertBasicWinBidding" parameterType="BasicWinBidding" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_win_bidding
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="project != null">project,</if>
+            <if test="proprietor != null">proprietor,</if>
+            <if test="surveytime != null">surveytime,</if>
+            <if test="surveyway != null">surveyway,</if>
+            <if test="state != null">state,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="project != null">#{project},</if>
+            <if test="proprietor != null">#{proprietor},</if>
+            <if test="surveytime != null">#{surveytime},</if>
+            <if test="surveyway != null">#{surveyway},</if>
+            <if test="state != null">#{state},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBasicWinBidding" parameterType="BasicWinBidding">
+        update basic_win_bidding
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="project != null">project = #{project},</if>
+            <if test="proprietor != null">proprietor = #{proprietor},</if>
+            <if test="surveytime != null">surveytime = #{surveytime},</if>
+            <if test="surveyway != null">surveyway = #{surveyway},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicWinBiddingById" parameterType="Long">
+        delete from basic_win_bidding where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicWinBiddingByIds" parameterType="String">
+        delete from basic_win_bidding where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicWinBiddingByOrdersn">
+        delete from basic_win_bidding where order_sn=#{ordersn}
+    </delete>
+
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicDataTableMapper">
+    
+    <resultMap type="BasicDataTable" id="BasicDataTableResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="sortIndex"    column="sort_index"    />
+        <result property="one"    column="one"    />
+        <result property="two"    column="two"    />
+        <result property="three"    column="three"    />
+        <result property="four"    column="four"    />
+        <result property="type"    column="type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicDataTableVo">
+        select id, title, sort_index, one, two, three, four, type, create_time, update_time, order_sn from basic_data_table
+    </sql>
+
+    <select id="selectBasicDataTableList" parameterType="BasicDataTable" resultMap="BasicDataTableResult">
+        <include refid="selectBasicDataTableVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="sortIndex != null  and sortIndex != ''"> and sort_index = #{sortIndex}</if>
+            <if test="one != null  and one != ''"> and one = #{one}</if>
+            <if test="two != null  and two != ''"> and two = #{two}</if>
+            <if test="three != null  and three != ''"> and three = #{three}</if>
+            <if test="four != null  and four != ''"> and four = #{four}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicDataTableById" parameterType="Long" resultMap="BasicDataTableResult">
+        <include refid="selectBasicDataTableVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicDataTable" parameterType="BasicDataTable" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_data_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="sortIndex != null">sort_index,</if>
+            <if test="one != null">one,</if>
+            <if test="two != null">two,</if>
+            <if test="three != null">three,</if>
+            <if test="four != null">four,</if>
+            <if test="type != null">`type`,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="sortIndex != null">#{sortIndex},</if>
+            <if test="one != null">#{one},</if>
+            <if test="two != null">#{two},</if>
+            <if test="three != null">#{three},</if>
+            <if test="four != null">#{four},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicDataTable" parameterType="BasicDataTable">
+        update basic_data_table
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="sortIndex != null">sort_index = #{sortIndex},</if>
+            <if test="one != null">one = #{one},</if>
+            <if test="two != null">two = #{two},</if>
+            <if test="three != null">three = #{three},</if>
+            <if test="four != null">four = #{four},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicDataTableById" parameterType="Long">
+        delete from basic_data_table where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicDataTableByIds" parameterType="String">
+        delete from basic_data_table where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicDataTableByOrdersn" >
+        delete from basic_data_table where order_sn=#{ordersn}
+    </delete>
+</mapper>

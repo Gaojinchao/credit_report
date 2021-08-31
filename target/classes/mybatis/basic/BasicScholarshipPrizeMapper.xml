@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicScholarshipPrizeMapper">
+    
+    <resultMap type="BasicScholarshipPrize" id="BasicScholarshipPrizeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="theUnit"    column="the_unit"    />
+        <result property="winingTime"    column="wining_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicScholarshipPrizeVo">
+        select id, name, the_unit, wining_time, create_time, update_time, order_sn from basic_scholarship_prize
+    </sql>
+
+    <select id="selectBasicScholarshipPrizeList" parameterType="BasicScholarshipPrize" resultMap="BasicScholarshipPrizeResult">
+        <include refid="selectBasicScholarshipPrizeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="theUnit != null  and theUnit != ''"> and the_unit = #{theUnit}</if>
+            <if test="winingTime != null  and winingTime != ''"> and wining_time = #{winingTime}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicScholarshipPrizeById" parameterType="Long" resultMap="BasicScholarshipPrizeResult">
+        <include refid="selectBasicScholarshipPrizeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicScholarshipPrize" parameterType="BasicScholarshipPrize" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_scholarship_prize
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="theUnit != null">the_unit,</if>
+            <if test="winingTime != null">wining_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="theUnit != null">#{theUnit},</if>
+            <if test="winingTime != null">#{winingTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicScholarshipPrize" parameterType="BasicScholarshipPrize">
+        update basic_scholarship_prize
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="theUnit != null">the_unit = #{theUnit},</if>
+            <if test="winingTime != null">wining_time = #{winingTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicScholarshipPrizeById" parameterType="Long">
+        delete from basic_scholarship_prize where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicScholarshipPrizeByIds" parameterType="String">
+        delete from basic_scholarship_prize where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

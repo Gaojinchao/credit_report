@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicCopyrightMapper">
+    
+    <resultMap type="BasicCopyright" id="BasicCopyrightResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="firstDate"    column="first_date"    />
+        <result property="name"    column="name"    />
+        <result property="company"    column="company"    />
+        <result property="approvalDate"    column="approval_date"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBasicCopyrightVo">
+        select id, number, first_date, name, company, approval_date, order_sn, create_time, update_time from basic_copyright
+    </sql>
+
+    <select id="selectBasicCopyrightList" parameterType="BasicCopyright" resultMap="BasicCopyrightResult">
+        <include refid="selectBasicCopyrightVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="firstDate != null  and firstDate != ''"> and first_date = #{firstDate}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="company != null  and company != ''"> and company = #{company}</if>
+            <if test="approvalDate != null  and approvalDate != ''"> and approval_date = #{approvalDate}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicCopyrightById" parameterType="Long" resultMap="BasicCopyrightResult">
+        <include refid="selectBasicCopyrightVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicCopyright" parameterType="BasicCopyright" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_copyright
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="firstDate != null">first_date,</if>
+            <if test="name != null">name,</if>
+            <if test="company != null">company,</if>
+            <if test="approvalDate != null">approval_date,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="firstDate != null">#{firstDate},</if>
+            <if test="name != null">#{name},</if>
+            <if test="company != null">#{company},</if>
+            <if test="approvalDate != null">#{approvalDate},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicCopyright" parameterType="BasicCopyright">
+        update basic_copyright
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="firstDate != null">first_date = #{firstDate},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="approvalDate != null">approval_date = #{approvalDate},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicCopyrightById" parameterType="Long">
+        delete from basic_copyright where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicCopyrightByIds" parameterType="String">
+        delete from basic_copyright where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

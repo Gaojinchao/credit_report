@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicEmployeeConditionMapper">
+    
+    <resultMap type="BasicEmployeeCondition" id="BasicEmployeeConditionResult">
+        <result property="id"    column="id"    />
+        <result property="personSum"    column="person_sum"    />
+        <result property="seniorSchool"    column="senior_school"    />
+        <result property="junior"    column="junior"    />
+        <result property="regular"    column="regular"    />
+        <result property="oneTwoYears"    column="one_two_years"    />
+        <result property="threeFiveYears"    column="three_five_years"    />
+        <result property="moreThanFiveYear"    column="more_than_five_year"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicEmployeeConditionVo">
+        select id, person_sum, senior_school, junior, regular, one_two_years, three_five_years, more_than_five_year, create_time, update_time, order_sn from basic_employee_condition
+    </sql>
+
+    <select id="selectBasicEmployeeConditionList" parameterType="BasicEmployeeCondition" resultMap="BasicEmployeeConditionResult">
+        <include refid="selectBasicEmployeeConditionVo"/>
+        <where>  
+            <if test="personSum != null  and personSum != ''"> and person_sum = #{personSum}</if>
+            <if test="seniorSchool != null "> and senior_school = #{seniorSchool}</if>
+            <if test="junior != null  and junior != ''"> and junior = #{junior}</if>
+            <if test="regular != null  and regular != ''"> and regular = #{regular}</if>
+            <if test="oneTwoYears != null "> and one_two_years = #{oneTwoYears}</if>
+            <if test="threeFiveYears != null "> and three_five_years = #{threeFiveYears}</if>
+            <if test="moreThanFiveYear != null "> and more_than_five_year = #{moreThanFiveYear}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicEmployeeConditionById" parameterType="Long" resultMap="BasicEmployeeConditionResult">
+        <include refid="selectBasicEmployeeConditionVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicEmployeeConditionByOrdersn" parameterType="string" resultMap="BasicEmployeeConditionResult">
+        <include refid="selectBasicEmployeeConditionVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicEmployeeCondition" parameterType="BasicEmployeeCondition" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_employee_condition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="personSum != null">person_sum,</if>
+            <if test="seniorSchool != null">senior_school,</if>
+            <if test="junior != null">junior,</if>
+            <if test="regular != null">regular,</if>
+            <if test="oneTwoYears != null">one_two_years,</if>
+            <if test="threeFiveYears != null">three_five_years,</if>
+            <if test="moreThanFiveYear != null">more_than_five_year,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="personSum != null">#{personSum},</if>
+            <if test="seniorSchool != null">#{seniorSchool},</if>
+            <if test="junior != null">#{junior},</if>
+            <if test="regular != null">#{regular},</if>
+            <if test="oneTwoYears != null">#{oneTwoYears},</if>
+            <if test="threeFiveYears != null">#{threeFiveYears},</if>
+            <if test="moreThanFiveYear != null">#{moreThanFiveYear},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicEmployeeCondition" parameterType="BasicEmployeeCondition">
+        update basic_employee_condition
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="personSum != null">person_sum = #{personSum},</if>
+            <if test="seniorSchool != null">senior_school = #{seniorSchool},</if>
+            <if test="junior != null">junior = #{junior},</if>
+            <if test="regular != null">regular = #{regular},</if>
+            <if test="oneTwoYears != null">one_two_years = #{oneTwoYears},</if>
+            <if test="threeFiveYears != null">three_five_years = #{threeFiveYears},</if>
+            <if test="moreThanFiveYear != null">more_than_five_year = #{moreThanFiveYear},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicEmployeeConditionById" parameterType="Long">
+        delete from basic_employee_condition where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicEmployeeConditionByIds" parameterType="String">
+        delete from basic_employee_condition where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicEmployeeConditionByOrdersn" >
+        delete from basic_employee_condition where order_sn=#{ordersn}
+    </delete>
+    
+</mapper>

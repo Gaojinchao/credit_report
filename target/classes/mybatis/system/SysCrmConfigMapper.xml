@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.system.mapper.SysCrmConfigMapper">
+    
+    <resultMap type="SysCrmConfig" id="SysCrmConfigResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="field1"    column="field1"    />
+        <result property="field2"    column="field2"    />
+        <result property="field3"    column="field3"    />
+        <result property="name"    column="name"    />
+        <result property="des"    column="des"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSysCrmConfigVo">
+        select id, company_id, field1, field2, field3, name, des, create_time, update_time from sys_crm_config
+    </sql>
+
+    <select id="selectSysCrmConfigList" parameterType="SysCrmConfig" resultMap="SysCrmConfigResult">
+        <include refid="selectSysCrmConfigVo"/>
+        <where>  
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+            <if test="field1 != null  and field1 != ''"> and field1 = #{field1}</if>
+            <if test="field2 != null  and field2 != ''"> and field2 = #{field2}</if>
+            <if test="field3 != null  and field3 != ''"> and field3 = #{field3}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="des != null  and des != ''"> and des = #{des}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysCrmConfigById" parameterType="Long" resultMap="SysCrmConfigResult">
+        <include refid="selectSysCrmConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectSysCrmConfigBy" resultMap="SysCrmConfigResult">
+     select id, company_id, field1, field2, field3, `name`, des, create_time, update_time from sys_crm_config
+     where company_id=#{companyId} and `name`=#{name}
+    </select>
+        
+    <insert id="insertSysCrmConfig" parameterType="SysCrmConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_crm_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">company_id,</if>
+            <if test="field1 != null">field1,</if>
+            <if test="field2 != null">field2,</if>
+            <if test="field3 != null">field3,</if>
+            <if test="name != null">name,</if>
+            <if test="des != null">des,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyId != null">#{companyId},</if>
+            <if test="field1 != null">#{field1},</if>
+            <if test="field2 != null">#{field2},</if>
+            <if test="field3 != null">#{field3},</if>
+            <if test="name != null">#{name},</if>
+            <if test="des != null">#{des},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysCrmConfig" parameterType="SysCrmConfig">
+        update sys_crm_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="field1 != null">field1 = #{field1},</if>
+            <if test="field2 != null">field2 = #{field2},</if>
+            <if test="field3 != null">field3 = #{field3},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="des != null">des = #{des},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysCrmConfigById" parameterType="Long">
+        delete from sys_crm_config where id = #{id}
+    </delete>
+
+    <delete id="deleteSysCrmConfigByIds" parameterType="String">
+        delete from sys_crm_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

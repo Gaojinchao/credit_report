@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicQualificationInformationMapper">
+    
+    <resultMap type="BasicQualificationInformation" id="BasicQualificationInformationResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="grade"    column="grade"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="licenceissuingAuth"    column="licenceIssuing_auth"    />
+        <result property="periodValidity"    column="period_validity"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicQualificationInformationVo">
+        select id, name, grade, serial_number, licenceIssuing_auth, period_validity, create_time, update_time, order_sn from basic_qualification_information
+    </sql>
+
+    <select id="selectBasicQualificationInformationList" parameterType="BasicQualificationInformation" resultMap="BasicQualificationInformationResult">
+        <include refid="selectBasicQualificationInformationVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="serialNumber != null  and serialNumber != ''"> and serial_number = #{serialNumber}</if>
+            <if test="licenceissuingAuth != null  and licenceissuingAuth != ''"> and licenceIssuing_auth = #{licenceissuingAuth}</if>
+            <if test="periodValidity != null  and periodValidity != ''"> and period_validity = #{periodValidity}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicQualificationInformationById" parameterType="Long" resultMap="BasicQualificationInformationResult">
+        <include refid="selectBasicQualificationInformationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicQualificationInformation" parameterType="BasicQualificationInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_qualification_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="grade != null">grade,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="licenceissuingAuth != null">licenceIssuing_auth,</if>
+            <if test="periodValidity != null">period_validity,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="licenceissuingAuth != null">#{licenceissuingAuth},</if>
+            <if test="periodValidity != null">#{periodValidity},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicQualificationInformation" parameterType="BasicQualificationInformation">
+        update basic_qualification_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="licenceissuingAuth != null">licenceIssuing_auth = #{licenceissuingAuth},</if>
+            <if test="periodValidity != null">period_validity = #{periodValidity},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicQualificationInformationById" parameterType="Long">
+        delete from basic_qualification_information where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicQualificationInformationByIds" parameterType="String">
+        delete from basic_qualification_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

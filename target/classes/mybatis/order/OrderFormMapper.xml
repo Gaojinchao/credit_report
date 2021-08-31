@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.order.mapper.OrderFormMapper">
+    
+    <resultMap type="OrderForm" id="OrderFormResult">
+        <result property="id"    column="id"    />
+        <result property="enterprise"    column="enterprise"    />
+        <result property="assessmentLevel"    column="assessment_level"    />
+        <result property="region"    column="region"    />
+        <result property="territory"    column="territory"    />
+        <result property="industry"    column="industry"    />
+        <result property="linkman"    column="linkman"    />
+        <result property="phone"    column="phone"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="singleState"    column="single_state"    />
+        <result property="state"    column="state"    />
+        <result property="assessmentResult"    column="assessment_result"    />
+        <result property="cause"    column="cause"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="cashStatement" column="cash_statement" />
+        <result property="balanceSheet" column="balance_sheet" />
+        <result property="incomeStatement" column="income_statement" />
+        <result property="oneDate" column="one_date"/>
+        <result property="twoDate" column="two_date"/>
+        <result property="threeDate" column="three_date"/>
+    </resultMap>
+
+    <sql id="selectOrderFormVo">
+        select id, enterprise, assessment_level, region,cash_statement,balance_sheet,income_statement,one_date,two_date,
+        three_date,territory, industry, linkman, phone, order_sn, single_state, state, assessment_result, cause, user_id, dept_id, company_id, create_time, update_time from order_form
+    </sql>
+
+    <select id="selectOrderFormList" parameterType="OrderForm" resultMap="OrderFormResult">
+        <include refid="selectOrderFormVo"/>
+        <where>  
+            <if test="enterprise != null  and enterprise != ''"> and enterprise = #{enterprise}</if>
+            <if test="assessmentLevel != null  and assessmentLevel != ''"> and assessment_level = #{assessmentLevel}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="territory != null  and territory != ''"> and territory = #{territory}</if>
+            <if test="industry != null  and industry != ''"> and industry = #{industry}</if>
+            <if test="linkman != null  and linkman != ''"> and linkman = #{linkman}</if>
+            <if test="phone != null "> and phone = #{phone}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="singleState != null  and singleState != ''"> and single_state = #{singleState}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="assessmentResult != null  and assessmentResult != ''"> and assessment_result = #{assessmentResult}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="companyId != null "> and company_id = #{companyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderFormById" parameterType="Long" resultMap="OrderFormResult">
+        <include refid="selectOrderFormVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrderForm" parameterType="OrderForm" useGeneratedKeys="true" keyProperty="id">
+        insert into order_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enterprise != null">enterprise,</if>
+            <if test="assessmentLevel != null">assessment_level,</if>
+            <if test="region != null">region,</if>
+            <if test="territory != null">territory,</if>
+            <if test="industry != null">industry,</if>
+            <if test="linkman != null">linkman,</if>
+            <if test="phone != null">phone,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="singleState != null">single_state,</if>
+            <if test="state != null">state,</if>
+            <if test="assessmentResult != null">assessment_result,</if>
+            <if test="cause != null">cause,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="cashStatement !=null">cash_statement,</if>
+            <if test="balanceSheet !=null">balance_sheet,</if>
+            <if test="incomeStatement !=null">income_statement,</if>
+            <if test="oneDate !=null">one_date,</if>
+            <if test="twoDate !=null">two_date</if>
+            <if test="threeDate !=null">three_date</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterprise != null">#{enterprise},</if>
+            <if test="assessmentLevel != null">#{assessmentLevel},</if>
+            <if test="region != null">#{region},</if>
+            <if test="territory != null">#{territory},</if>
+            <if test="industry != null">#{industry},</if>
+            <if test="linkman != null">#{linkman},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="singleState != null">#{singleState},</if>
+            <if test="state != null">#{state},</if>
+            <if test="assessmentResult != null">#{assessmentResult},</if>
+            <if test="cause != null">#{cause},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="companyId != null">#{companyId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="cashStatement !=null">#{cashStatement},</if>
+            <if test="balanceSheet !=null">#{balanceSheet},</if>
+            <if test="incomeStatement !=null">#{incomeStatement},</if>
+            <if test="oneDate !=null">#{oneDate},</if>
+            <if test="twoDate !=null">#{twoDate},</if>
+            <if test="threeDate !=null">#{threeDate},</if>
+         </trim>
+    </insert>
+
+
+    <update id="updateOrderForm" parameterType="OrderForm">
+        update order_form
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="enterprise != null">enterprise = #{enterprise},</if>
+            <if test="assessmentLevel != null">assessment_level = #{assessmentLevel},</if>
+            <if test="region != null">region = #{region},</if>
+            <if test="territory != null">territory = #{territory},</if>
+            <if test="industry != null">industry = #{industry},</if>
+            <if test="linkman != null">linkman = #{linkman},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="singleState != null">single_state = #{singleState},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="assessmentResult != null">assessment_result = #{assessmentResult},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="cashStatement !=null">cash_statement=#{cashStatement},</if>
+            <if test="balanceSheet !=null">balance_sheet=#{balanceSheet},</if>
+            <if test="incomeStatement !=null">income_statement=#{incomeStatement},</if>
+            <if test="oneDate !=null">one_date=#{oneDate},</if>
+            <if test="twoDate !=null">two_date=#{twoDate},</if>
+            <if test="threeDate !=null">three_date=#{threeDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderFormById" parameterType="Long">
+        delete from order_form where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderFormByIds" parameterType="String">
+        delete from order_form where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByOrdersn" resultMap="OrderFormResult">
+        <include refid="selectOrderFormVo"/>
+        where order_sn = #{ordersn}
+    </select>
+    
+</mapper>

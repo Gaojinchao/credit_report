@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicMainManagerMapper">
+    
+    <resultMap type="BasicMainManager" id="BasicMainManagerResult">
+        <result property="id"    column="id"    />
+        <result property="mainManagerName"    column="main_manager_name"    />
+        <result property="mainManagerPost"    column="main_manager_post"    />
+        <result property="mainManagerAge"    column="main_manager_age"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="creditRecord" column="credit_record" />
+    </resultMap>
+
+    <sql id="selectBasicMainManagerVo">
+        select id, `main_manager_name`, main_manager_post, main_manager_age, create_time, update_time, order_sn,credit_record from basic_main_manager
+    </sql>
+
+    <select id="selectBasicMainManagerList" parameterType="BasicMainManager" resultMap="BasicMainManagerResult">
+        <include refid="selectBasicMainManagerVo"/>
+        <where>  
+            <if test="mainManagerName != null  and mainManagerName != ''"> and main_manager_name like concat('%', #{mainManagerName}, '%')</if>
+            <if test="mainManagerPost != null  and mainManagerPost != ''"> and main_manager_post = #{mainManagerPost}</if>
+            <if test="mainManagerAge != null "> and main_manager_age = #{mainManagerAge}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicMainManagerById" parameterType="Long" resultMap="BasicMainManagerResult">
+        <include refid="selectBasicMainManagerVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicMainManagerByOrdersn" parameterType="string" resultMap="BasicMainManagerResult">
+        <include refid="selectBasicMainManagerVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicMainManager" parameterType="BasicMainManager" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_main_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mainManagerName != null">`main_manager_name`,</if>
+            <if test="mainManagerPost != null">main_manager_post,</if>
+            <if test="mainManagerAge != null">main_manager_age,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="creditRecord !=null">credit_record,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mainManagerName != null">#{mainManagerName},</if>
+            <if test="mainManagerPost != null">#{mainManagerPost},</if>
+            <if test="mainManagerAge != null">#{mainManagerAge},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="creditRecord != null">#{creditRecord},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicMainManager" parameterType="BasicMainManager">
+        update basic_main_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainManagerName != null">`main_manager_name` = #{mainManagerName},</if>
+            <if test="mainManagerPost != null">main_manager_post = #{mainManagerPost},</if>
+            <if test="mainManagerAge != null">main_manager_age = #{mainManagerAge},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="creditRecord !=null">credit_record=#{creditRecord},</if>
+
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicMainManagerById" parameterType="Long">
+        delete from basic_main_manager where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicMainManagerByIds" parameterType="String">
+        delete from basic_main_manager where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicMainManageByOrdersn" >
+        delete from basic_main_manager where order_sn =#{ordersn}
+    </delete>
+</mapper>

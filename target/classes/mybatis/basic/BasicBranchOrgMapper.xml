@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicBranchOrgMapper">
+    
+    <resultMap type="BasicBranchOrg" id="BasicBranchOrgResult">
+        <result property="id"    column="id"    />
+        <result property="branchOrgName"    column="branch_org_name"    />
+        <result property="branchAddress"    column="branch_address"    />
+        <result property="branchPhone"    column="branch_phone"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBasicBranchOrgVo">
+        select id, branch_org_name, branch_address, branch_phone, order_sn, create_time, update_time from basic_branch_org
+    </sql>
+
+    <select id="selectBasicBranchOrgList" parameterType="BasicBranchOrg" resultMap="BasicBranchOrgResult">
+        <include refid="selectBasicBranchOrgVo"/>
+        <where>  
+            <if test="branchOrgName != null  and branchOrgName != ''"> and branch_org_name like concat('%', #{branchOrgName}, '%')</if>
+            <if test="branchAddress != null  and branchAddress != ''"> and branch_address = #{branchAddress}</if>
+            <if test="branchPhone != null "> and branch_phone = #{branchPhone}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicBranchOrgById" parameterType="Long" resultMap="BasicBranchOrgResult">
+        <include refid="selectBasicBranchOrgVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicBranchOrg" parameterType="BasicBranchOrg" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_branch_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="branchOrgName != null">branch_org_name,</if>
+            <if test="branchAddress != null">branch_address,</if>
+            <if test="branchPhone != null">branch_phone,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="branchOrgName != null">#{branchOrgName},</if>
+            <if test="branchAddress != null">#{branchAddress},</if>
+            <if test="branchPhone != null">#{branchPhone},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicBranchOrg" parameterType="BasicBranchOrg">
+        update basic_branch_org
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="branchOrgName != null">branch_org_name = #{branchOrgName},</if>
+            <if test="branchAddress != null">branch_address = #{branchAddress},</if>
+            <if test="branchPhone != null">branch_phone = #{branchPhone},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicBranchOrgById" parameterType="Long">
+        delete from basic_branch_org where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicBranchOrgByIds" parameterType="String">
+        delete from basic_branch_org where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicHistoryClassMapper">
+    
+    <resultMap type="BasicHistoryClass" id="BasicHistoryClassResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="grade"    column="grade"    />
+        <result property="ratingFirms"    column="rating_firms"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicHistoryClassVo">
+        select id, year, grade, rating_firms, create_time, update_time, order_sn from basic_history_class
+    </sql>
+
+    <select id="selectBasicHistoryClassList" parameterType="BasicHistoryClass" resultMap="BasicHistoryClassResult">
+        <include refid="selectBasicHistoryClassVo"/>
+        <where>  
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="ratingFirms != null  and ratingFirms != ''"> and rating_firms = #{ratingFirms}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicHistoryClassById" parameterType="Long" resultMap="BasicHistoryClassResult">
+        <include refid="selectBasicHistoryClassVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicHistoryClass" parameterType="BasicHistoryClass" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_history_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="year != null">year,</if>
+            <if test="grade != null">grade,</if>
+            <if test="ratingFirms != null">rating_firms,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="year != null">#{year},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="ratingFirms != null">#{ratingFirms},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicHistoryClass" parameterType="BasicHistoryClass">
+        update basic_history_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="ratingFirms != null">rating_firms = #{ratingFirms},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicHistoryClassById" parameterType="Long">
+        delete from basic_history_class where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicHistoryClassByIds" parameterType="String">
+        delete from basic_history_class where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

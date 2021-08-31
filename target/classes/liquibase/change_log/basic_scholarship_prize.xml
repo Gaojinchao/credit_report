@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_scholarship_prize" value="true" dbms="mysql"/>
+    <changeSet id="basic_scholarship_prize_01" author="alfred.zong" >
+        <createTable tableName="basic_scholarship_prize" remarks="获奖情况">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)" remarks="名称" />
+            <column name="the_unit" type="varchar(100)" remarks="颁奖单位" />
+            <column name="wining_time" type="varchar(50)" remarks="获奖时间" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="basic_scholarship_prize_02" author="alfred.zong">
+        <addColumn tableName="basic_scholarship_prize">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

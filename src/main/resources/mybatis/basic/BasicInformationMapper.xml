@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicInformationMapper">
+
+    <resultMap type="BasicInformation" id="BasicInformationResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="operName" column="oper_name"/>
+        <result property="creditNo" column="credit_no"/>
+        <result property="regCapiDesc" column="reg_capi_desc"/>
+        <result property="status" column="status"/>
+        <result property="address" column="address"/>
+        <result property="scope" column="scope"/>
+        <result property="industy" column="industy"/>
+        <result property="openBank" column="open_bank"/>
+        <result property="creditNumber" column="credit_number"/>
+        <result property="accout" column="accout"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="orderSn" column="order_sn"/>
+        <result property="econKind" column="econ_kind"/>
+        <result property="actualCapi" column="actual_capi"/>
+        <result property="highTech" column="high_tech" />
+        <result property="scale" column="scale"/>
+        <result property="architecture" column="architecture" />
+        <result property="picture" column="picture"/>
+        <result property="strategy" column="strategy" />
+        <result property="companyPhone" column="company_phone" />
+    </resultMap>
+
+    <sql id="selectBasicInformationVo">
+        select id, `name`, strategy,architecture,company_phone,picture,start_date, oper_name, credit_no, actual_capi,econ_kind,`scale`,reg_capi_desc, high_tech,status, address, scope, industy, open_bank, credit_number, accout, create_time, update_time, order_sn from basic_information
+    </sql>
+
+    <select id="selectBasicInformationList" parameterType="BasicInformation" resultMap="BasicInformationResult">
+        <include refid="selectBasicInformationVo"/>
+        <where>
+            <if test="name != null  and name != ''">and `name` like concat('%', #{name}, '%')</if>
+            <if test="startDate != null  and startDate != ''">and start_date = #{startDate}</if>
+            <if test="operName != null  and operName != ''">and oper_name like concat('%', #{operName}, '%')</if>
+            <if test="creditNo != null  and creditNo != ''">and credit_no = #{creditNo}</if>
+            <if test="regCapiDesc != null ">and reg_capi_desc = #{regCapiDesc}</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="address != null  and address != ''">and address = #{address}</if>
+            <if test="scope != null  and scope != ''">and scope = #{scope}</if>
+            <if test="industy != null  and industy != ''">and industy = #{industy}</if>
+            <if test="openBank != null  and openBank != ''">and open_bank = #{openBank}</if>
+            <if test="creditNumber != null  and creditNumber != ''">and credit_number = #{creditNumber}</if>
+            <if test="accout != null  and accout != ''">and accout = #{accout}</if>
+            <if test="orderSn != null  and orderSn != ''">and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+
+    <select id="selectBasicInformationById" parameterType="Long" resultMap="BasicInformationResult">
+        <include refid="selectBasicInformationVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicInformationByOrdersn" parameterType="string" resultMap="BasicInformationResult">
+        <include refid="selectBasicInformationVo"/>
+        where orderSn = #{order}
+    </select>
+
+    <select id="selectBasicInformationByordersn" parameterType="string" resultMap="BasicInformationResult">
+        <include refid="selectBasicInformationVo"/>
+        where order_sn = #{ordersn}
+    </select>
+
+    <insert id="insertBasicInformation" parameterType="BasicInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">`name`,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="operName != null">oper_name,</if>
+            <if test="creditNo != null">credit_no,</if>
+            <if test="regCapiDesc != null">reg_capi_desc,</if>
+            <if test="status != null">status,</if>
+            <if test="address != null">address,</if>
+            <if test="scope != null">scope,</if>
+            <if test="industy != null">industy,</if>
+            <if test="openBank != null">open_bank,</if>
+            <if test="creditNumber != null">credit_number,</if>
+            <if test="accout != null">accout,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="econKind != null">econ_kind,</if>
+            <if test="actualCapi !=null">actual_capi,</if>
+            <if test="highTech !=null">high_tech,</if>
+            <if test="scale !=null">`scale`,</if>
+            <if test="architecture !=null">architecture,</if>
+            <if test="picture !=null">picture,</if>
+            <if test="strategy !=null">strategy,</if>
+            <if test="companyPhone !=null and companyPhone !=''">company_phone,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="operName != null">#{operName},</if>
+            <if test="creditNo != null">#{creditNo},</if>
+            <if test="regCapiDesc != null">#{regCapiDesc},</if>
+            <if test="status != null">#{status},</if>
+            <if test="address != null">#{address},</if>
+            <if test="scope != null">#{scope},</if>
+            <if test="industy != null">#{industy},</if>
+            <if test="openBank != null">#{openBank},</if>
+            <if test="creditNumber != null">#{creditNumber},</if>
+            <if test="accout != null">#{accout},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="econKind != null">#{econKind},</if>
+            <if test="actualCapi !=null">#{actualCapi},</if>
+            <if test="highTech !=null">#{highTech},</if>
+            <if test="scale !=null">#{scale},</if>
+            <if test="architecture !=null">#{architecture},</if>
+            <if test="picture !=null">#{picture},</if>
+            <if test="strategy !=null">#{strategy},</if>
+            <if test="companyPhone !=null and companyPhone !=''">#{companyPhone},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateBasicInformation" parameterType="BasicInformation">
+        update basic_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">`name` = #{name},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="operName != null">oper_name = #{operName},</if>
+            <if test="creditNo != null">credit_no = #{creditNo},</if>
+            <if test="regCapiDesc != null">reg_capi_desc = #{regCapiDesc},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="scope != null">scope = #{scope},</if>
+            <if test="industy != null">industy = #{industy},</if>
+            <if test="openBank != null">open_bank = #{openBank},</if>
+            <if test="creditNumber != null">credit_number = #{creditNumber},</if>
+            <if test="accout != null">accout = #{accout},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="econKind != null">econ_kind = #{econKind},</if>
+            <if test="actualCapi !=null">actual_capi=#{actualCapi},</if>
+            <if test="highTech !=null">high_tech=#{highTech},</if>
+            <if test="scale !=null">`scale` = #{scale},</if>
+            <if test="architecture !=null">architecture=#{architecture},</if>
+            <if test="picture !=null">picture=#{picture},</if>
+            <if test="strategy !=null">strategy=#{strategy},</if>
+            <if test="companyPhone !=null and companyPhone !=''">company_phone=#{companyPhone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicInformationById" parameterType="Long">
+        delete from basic_information where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicInformationByIds" parameterType="String">
+        delete from basic_information where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

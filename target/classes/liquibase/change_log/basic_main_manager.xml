@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_main_manager" value="true" dbms="mysql"/>
+    <changeSet id="basic_main_manager_01" author="alfred.zong" >
+        <createTable tableName="basic_main_manager" remarks="主要管理者信息">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)" remarks="姓名" />
+            <column name="post" type="varchar(50)" remarks="职务" />
+            <column name="age" type="int(4)" remarks="年龄" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="basic_main_manager_02" author="alfred.zong">
+        <addColumn tableName="basic_main_manager">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="basic_main_manager_03" author="alfred.zong">
+        <renameColumn tableName="basic_main_manager" columnDataType="varchar(100)" oldColumnName="post" newColumnName="main_manager_post" />
+        <renameColumn tableName="basic_main_manager" columnDataType="varchar(50)" oldColumnName="name" newColumnName="main_manager_name"/>
+        <renameColumn tableName="basic_main_manager" columnDataType="int(4)" oldColumnName="age" newColumnName="main_manager_age" />
+        <addColumn tableName="basic_main_manager">
+            <column name="credit_record" type="varchar(255)" remarks="信用记录"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

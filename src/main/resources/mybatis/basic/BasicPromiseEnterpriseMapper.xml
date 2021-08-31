@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicPromiseEnterpriseMapper">
+    
+    <resultMap type="BasicPromiseEnterprise" id="BasicPromiseEnterpriseResult">
+        <result property="id"    column="id"    />
+        <result property="dateis"    column="dateis"    />
+        <result property="referenceNumber"    column="reference_number"    />
+        <result property="caseCode"    column="case_code"    />
+        <result property="obligation"    column="obligation"    />
+        <result property="performcondition"    column="performcondition"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicPromiseEnterpriseVo">
+        select id, dateis, reference_number, case_code, obligation, performcondition, create_time, update_time, order_sn from basic_promise_enterprise
+    </sql>
+
+    <select id="selectBasicPromiseEnterpriseList" parameterType="BasicPromiseEnterprise" resultMap="BasicPromiseEnterpriseResult">
+        <include refid="selectBasicPromiseEnterpriseVo"/>
+        <where>  
+            <if test="dateis != null  and dateis != ''"> and dateis = #{dateis}</if>
+            <if test="referenceNumber != null  and referenceNumber != ''"> and reference_number = #{referenceNumber}</if>
+            <if test="caseCode != null  and caseCode != ''"> and case_code = #{caseCode}</if>
+            <if test="obligation != null  and obligation != ''"> and obligation = #{obligation}</if>
+            <if test="performcondition != null  and performcondition != ''"> and performcondition = #{performcondition}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicPromiseEnterpriseById" parameterType="Long" resultMap="BasicPromiseEnterpriseResult">
+        <include refid="selectBasicPromiseEnterpriseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicPromiseEnterprise" parameterType="BasicPromiseEnterprise" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_promise_enterprise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dateis != null">dateis,</if>
+            <if test="referenceNumber != null">reference_number,</if>
+            <if test="caseCode != null">case_code,</if>
+            <if test="obligation != null">obligation,</if>
+            <if test="performcondition != null">performcondition,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dateis != null">#{dateis},</if>
+            <if test="referenceNumber != null">#{referenceNumber},</if>
+            <if test="caseCode != null">#{caseCode},</if>
+            <if test="obligation != null">#{obligation},</if>
+            <if test="performcondition != null">#{performcondition},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicPromiseEnterprise" parameterType="BasicPromiseEnterprise">
+        update basic_promise_enterprise
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dateis != null">dateis = #{dateis},</if>
+            <if test="referenceNumber != null">reference_number = #{referenceNumber},</if>
+            <if test="caseCode != null">case_code = #{caseCode},</if>
+            <if test="obligation != null">obligation = #{obligation},</if>
+            <if test="performcondition != null">performcondition = #{performcondition},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicPromiseEnterpriseById" parameterType="Long">
+        delete from basic_promise_enterprise where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicPromiseEnterpriseByIds" parameterType="String">
+        delete from basic_promise_enterprise where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

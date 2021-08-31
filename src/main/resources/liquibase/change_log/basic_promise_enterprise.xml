@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_promise_enterprise" value="true" dbms="mysql"/>
+    <changeSet id="basic_promise_enterprise_01" author="alfred.zong" >
+        <createTable tableName="basic_promise_enterprise" remarks="失信企业">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="dateis" type="varchar(50)" remarks="日期" />
+            <column name="reference_number" type="varchar(50)" remarks="执行文号" />
+            <column name="case_code" type="varchar(50)" remarks="案件号" />
+            <column name="obligation" type="varchar(255)" remarks="义务" />
+            <column name="performcondition" type="varchar(100)" remarks="履行情况" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="basic_promise_enterprise_02" author="alfred.zong">
+        <addColumn tableName="basic_promise_enterprise">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

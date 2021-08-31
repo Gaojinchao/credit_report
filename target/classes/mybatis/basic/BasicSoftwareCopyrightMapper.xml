@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicSoftwareCopyrightMapper">
+    
+    <resultMap type="BasicSoftwareCopyright" id="BasicSoftwareCopyrightResult">
+        <result property="id"    column="id"    />
+        <result property="registerNum"    column="register_num"    />
+        <result property="classlyCode"    column="classly_code"    />
+        <result property="softwareName"    column="software_name"    />
+        <result property="copyrightName"    column="copyright_name"    />
+        <result property="recordDate"    column="record_date"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicSoftwareCopyrightVo">
+        select id, register_num, classly_code, software_name, copyright_name, record_date, create_time, update_time, order_sn from basic_software_copyright
+    </sql>
+
+    <select id="selectBasicSoftwareCopyrightList" parameterType="BasicSoftwareCopyright" resultMap="BasicSoftwareCopyrightResult">
+        <include refid="selectBasicSoftwareCopyrightVo"/>
+        <where>  
+            <if test="registerNum != null  and registerNum != ''"> and register_num = #{registerNum}</if>
+            <if test="classlyCode != null  and classlyCode != ''"> and classly_code = #{classlyCode}</if>
+            <if test="softwareName != null  and softwareName != ''"> and software_name like concat('%', #{softwareName}, '%')</if>
+            <if test="copyrightName != null  and copyrightName != ''"> and copyright_name like concat('%', #{copyrightName}, '%')</if>
+            <if test="recordDate != null  and recordDate != ''"> and record_date = #{recordDate}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicSoftwareCopyrightById" parameterType="Long" resultMap="BasicSoftwareCopyrightResult">
+        <include refid="selectBasicSoftwareCopyrightVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicSoftwareCopyright" parameterType="BasicSoftwareCopyright" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_software_copyright
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="registerNum != null">register_num,</if>
+            <if test="classlyCode != null">classly_code,</if>
+            <if test="softwareName != null">software_name,</if>
+            <if test="copyrightName != null">copyright_name,</if>
+            <if test="recordDate != null">record_date,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="registerNum != null">#{registerNum},</if>
+            <if test="classlyCode != null">#{classlyCode},</if>
+            <if test="softwareName != null">#{softwareName},</if>
+            <if test="copyrightName != null">#{copyrightName},</if>
+            <if test="recordDate != null">#{recordDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicSoftwareCopyright" parameterType="BasicSoftwareCopyright">
+        update basic_software_copyright
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="registerNum != null">register_num = #{registerNum},</if>
+            <if test="classlyCode != null">classly_code = #{classlyCode},</if>
+            <if test="softwareName != null">software_name = #{softwareName},</if>
+            <if test="copyrightName != null">copyright_name = #{copyrightName},</if>
+            <if test="recordDate != null">record_date = #{recordDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicSoftwareCopyrightById" parameterType="Long">
+        delete from basic_software_copyright where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicSoftwareCopyrightByIds" parameterType="String">
+        delete from basic_software_copyright where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

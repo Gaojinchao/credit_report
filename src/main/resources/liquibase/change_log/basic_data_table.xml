@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_data_table" value="true" dbms="mysql"/>
+    <changeSet id="basic_data_table_01" author="alfred.zong" >
+        <createTable tableName="basic_data_table" remarks="数据表">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="title" type="varchar(100)" remarks="年份" />
+            <column name="sort_index" type="varchar(10)" remarks="排序" />
+            <column name="one" type="varchar(50)" remarks="近一年" />
+            <column name="two" type="varchar(50)" remarks="近两年" />
+            <column name="three" type="varchar(50)" remarks="近三年" />
+            <column name="four" type="varchar(50)" remarks="近四年" />
+            <column name="type" type="varchar(50)" remarks="类型" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="basic_data_table_02" author="alfred.zong">
+        <addColumn tableName="basic_data_table">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+    <changeSet id="basic_data_table_03" author="alfred.zong">
+        <modifyDataType tableName="basic_data_table" columnName="sort_index" newDataType="int(4)" />
+    </changeSet>
+    <changeSet id="basic_data_table_04" author="alfred.zong">
+        <modifyDataType tableName="basic_data_table" columnName="one" newDataType="decimal(10,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="two" newDataType="decimal(10,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="three" newDataType="decimal(10,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="four" newDataType="decimal(10,2)" />
+    </changeSet>
+
+    <changeSet id="basic_data_table_05" author="alfred.zong">
+        <modifyDataType tableName="basic_data_table" columnName="one" newDataType="decimal(20,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="two" newDataType="decimal(20,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="three" newDataType="decimal(20,2)" />
+        <modifyDataType tableName="basic_data_table" columnName="four" newDataType="decimal(20,2)" />
+    </changeSet>
+</databaseChangeLog>

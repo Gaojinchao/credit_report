@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicJudicativePaperMapper">
+    
+    <resultMap type="BasicJudicativePaper" id="BasicJudicativePaperResult">
+        <result property="id"    column="id"    />
+        <result property="judgmentDate"    column="judgment_date"    />
+        <result property="title"    column="title"    />
+        <result property="caseCode"    column="case_code"    />
+        <result property="cause"    column="cause"    />
+        <result property="court"    column="court"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicJudicativePaperVo">
+        select id, judgment_date, title, case_code, cause, court, create_time, update_time, order_sn from basic_judicative_paper
+    </sql>
+
+    <select id="selectBasicJudicativePaperList" parameterType="BasicJudicativePaper" resultMap="BasicJudicativePaperResult">
+        <include refid="selectBasicJudicativePaperVo"/>
+        <where>  
+            <if test="judgmentDate != null  and judgmentDate != ''"> and judgment_date = #{judgmentDate}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="caseCode != null  and caseCode != ''"> and case_code = #{caseCode}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
+            <if test="court != null  and court != ''"> and court = #{court}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicJudicativePaperById" parameterType="Long" resultMap="BasicJudicativePaperResult">
+        <include refid="selectBasicJudicativePaperVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicJudicativePaper" parameterType="BasicJudicativePaper" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_judicative_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="judgmentDate != null">judgment_date,</if>
+            <if test="title != null">title,</if>
+            <if test="caseCode != null">case_code,</if>
+            <if test="cause != null">cause,</if>
+            <if test="court != null">court,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="judgmentDate != null">#{judgmentDate},</if>
+            <if test="title != null">#{title},</if>
+            <if test="caseCode != null">#{caseCode},</if>
+            <if test="cause != null">#{cause},</if>
+            <if test="court != null">#{court},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicJudicativePaper" parameterType="BasicJudicativePaper">
+        update basic_judicative_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="judgmentDate != null">judgment_date = #{judgmentDate},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="caseCode != null">case_code = #{caseCode},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="court != null">court = #{court},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicJudicativePaperById" parameterType="Long">
+        delete from basic_judicative_paper where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicJudicativePaperByIds" parameterType="String">
+        delete from basic_judicative_paper where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

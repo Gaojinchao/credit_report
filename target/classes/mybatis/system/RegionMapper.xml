@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.system.mapper.RegionMapper">
+
+    <resultMap id="RegionMap" type="com.saipaisi.project.system.domain.Region">
+        <result property="id" column="id"/>
+         <result property="cityName" column="cityname" />
+        <result property="pid" column="pid" />
+    </resultMap>
+
+   <select id="list" resultMap="RegionMap">
+       select id,cityname,pid from region where pid=#{pid}
+   </select>
+
+    <select id="getIdByName" resultType="long">
+        select id from region where cityname like concat('%',#{name},'%') limit 1
+    </select>
+
+    <select id="allList" resultMap="RegionMap">
+       select id,cityname,pid from region where pid>0 order by region_order asc
+    </select>
+
+</mapper>

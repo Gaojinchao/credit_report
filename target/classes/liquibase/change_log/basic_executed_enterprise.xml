@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_executed_enterprise" value="true" dbms="mysql"/>
+    <changeSet id="basic_executed_enterprise_01" author="alfred.zong" >
+        <createTable tableName="basic_executed_enterprise" remarks="被执行企业">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="judgment_date" type="varchar(50)" remarks="日期" />
+            <column name="person_subject" type="varchar(50)" remarks="被执行人" />
+            <column name="case_code" type="varchar(50)" remarks="案件号" />
+            <column name="executive" type="varchar(255)" remarks="执行标准" />
+            <column name="court" type="varchar(100)" remarks="法院" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="basic_executed_enterprise_02" author="alfred.zong">
+        <addColumn tableName="basic_executed_enterprise">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

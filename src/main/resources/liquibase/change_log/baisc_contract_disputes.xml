@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="baisc_contract_disputes" value="true" dbms="mysql"/>
+    <changeSet id="baisc_contract_disputes_01" author="alfred.zong" >
+        <createTable tableName="baisc_contract_disputes" remarks="合同纠纷">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="decison_time" type="varchar(100)" remarks="判决时间" />
+            <column name="decison_code" type="varchar(100)" remarks="裁判文书编号" />
+            <column name="defendant" type="varchar(100)" remarks="被告" />
+            <column name="result" type="varchar(500)" remarks="结果" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    <changeSet id="baisc_contract_disputes_02" author="alfred.zong">
+        <addColumn tableName="baisc_contract_disputes">
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

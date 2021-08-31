@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicSystemInformationMapper">
+    
+    <resultMap type="BasicSystemInformation" id="BasicSystemInformationResult">
+        <result property="id"    column="id"    />
+        <result property="certificationProgram"    column="certification_program"    />
+        <result property="certificationCode"    column="certification_code"    />
+        <result property="effectiveCutoff"    column="effective_cutoff"    />
+        <result property="certificationBody"    column="certification_body"    />
+        <result property="standard"    column="standard"    />
+        <result property="certificationScope"    column="certification_scope"    />
+        <result property="type"    column="type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicSystemInformationVo">
+        select id, certification_program, certification_code, effective_cutoff, certification_body, standard, certification_scope, type, create_time, update_time, order_sn from basic_system_information
+    </sql>
+
+    <select id="selectBasicSystemInformationList" parameterType="BasicSystemInformation" resultMap="BasicSystemInformationResult">
+        <include refid="selectBasicSystemInformationVo"/>
+        <where>  
+            <if test="certificationProgram != null  and certificationProgram != ''"> and certification_program = #{certificationProgram}</if>
+            <if test="certificationCode != null  and certificationCode != ''"> and certification_code = #{certificationCode}</if>
+            <if test="effectiveCutoff != null  and effectiveCutoff != ''"> and effective_cutoff = #{effectiveCutoff}</if>
+            <if test="certificationBody != null  and certificationBody != ''"> and certification_body = #{certificationBody}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="certificationScope != null  and certificationScope != ''"> and certification_scope = #{certificationScope}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicSystemInformationById" parameterType="Long" resultMap="BasicSystemInformationResult">
+        <include refid="selectBasicSystemInformationVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicSystemInformationByOrdersn" parameterType="string" resultMap="BasicSystemInformationResult">
+        <include refid="selectBasicSystemInformationVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicSystemInformation" parameterType="BasicSystemInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_system_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="certificationProgram != null">certification_program,</if>
+            <if test="certificationCode != null">certification_code,</if>
+            <if test="effectiveCutoff != null">effective_cutoff,</if>
+            <if test="certificationBody != null">certification_body,</if>
+            <if test="standard != null">standard,</if>
+            <if test="certificationScope != null">certification_scope,</if>
+            <if test="type != null">type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="certificationProgram != null">#{certificationProgram},</if>
+            <if test="certificationCode != null">#{certificationCode},</if>
+            <if test="effectiveCutoff != null">#{effectiveCutoff},</if>
+            <if test="certificationBody != null">#{certificationBody},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="certificationScope != null">#{certificationScope},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicSystemInformation" parameterType="BasicSystemInformation">
+        update basic_system_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="certificationProgram != null">certification_program = #{certificationProgram},</if>
+            <if test="certificationCode != null">certification_code = #{certificationCode},</if>
+            <if test="effectiveCutoff != null">effective_cutoff = #{effectiveCutoff},</if>
+            <if test="certificationBody != null">certification_body = #{certificationBody},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="certificationScope != null">certification_scope = #{certificationScope},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicSystemInformationById" parameterType="Long">
+        delete from basic_system_information where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicSystemInformationByIds" parameterType="String">
+        delete from basic_system_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicSystemInformationByOrdersn">
+         delete from basic_system_information where order_sn=#{ordersn}
+    </delete>
+    
+</mapper>

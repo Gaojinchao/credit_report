@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BaiscContractDisputesMapper">
+    
+    <resultMap type="BaiscContractDisputes" id="BaiscContractDisputesResult">
+        <result property="id"    column="id"    />
+        <result property="decisonTime"    column="decison_time"    />
+        <result property="decisonCode"    column="decison_code"    />
+        <result property="defendant"    column="defendant"    />
+        <result property="result"    column="result"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBaiscContractDisputesVo">
+        select id, decison_time, decison_code, defendant, result, create_time, update_time, order_sn from baisc_contract_disputes
+    </sql>
+
+    <select id="selectBaiscContractDisputesList" parameterType="BaiscContractDisputes" resultMap="BaiscContractDisputesResult">
+        <include refid="selectBaiscContractDisputesVo"/>
+        <where>  
+            <if test="decisonTime != null  and decisonTime != ''"> and decison_time = #{decisonTime}</if>
+            <if test="decisonCode != null  and decisonCode != ''"> and decison_code = #{decisonCode}</if>
+            <if test="defendant != null  and defendant != ''"> and defendant = #{defendant}</if>
+            <if test="result != null  and result != ''"> and result = #{result}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBaiscContractDisputesById" parameterType="Long" resultMap="BaiscContractDisputesResult">
+        <include refid="selectBaiscContractDisputesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBaiscContractDisputes" parameterType="BaiscContractDisputes" useGeneratedKeys="true" keyProperty="id">
+        insert into baisc_contract_disputes
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="decisonTime != null">decison_time,</if>
+            <if test="decisonCode != null">decison_code,</if>
+            <if test="defendant != null">defendant,</if>
+            <if test="result != null">result,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="decisonTime != null">#{decisonTime},</if>
+            <if test="decisonCode != null">#{decisonCode},</if>
+            <if test="defendant != null">#{defendant},</if>
+            <if test="result != null">#{result},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBaiscContractDisputes" parameterType="BaiscContractDisputes">
+        update baisc_contract_disputes
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="decisonTime != null">decison_time = #{decisonTime},</if>
+            <if test="decisonCode != null">decison_code = #{decisonCode},</if>
+            <if test="defendant != null">defendant = #{defendant},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBaiscContractDisputesById" parameterType="Long">
+        delete from baisc_contract_disputes where id = #{id}
+    </delete>
+
+    <delete id="deleteBaiscContractDisputesByIds" parameterType="String">
+        delete from baisc_contract_disputes where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.company.mapper.CompanyMapper">
+    
+    <resultMap type="Company" id="CompanyResult">
+        <result property="id"    column="id"    />
+        <result property="companyNameCn"    column="company_name_cn"    />
+        <result property="companyNameEn"    column="company_name_en"    />
+        <result property="logo"    column="logo"    />
+        <result property="linkman"    column="linkman"    />
+        <result property="phone"    column="phone"    />
+        <result property="balance"    column="balance"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="expirationDate"    column="expiration_date"    />
+        <result property="bankDeposit"    column="bank_deposit"    />
+        <result property="accountNumber"    column="account_number"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCompanyVo">
+        select id, company_name_cn, company_name_en, logo, linkman, phone, balance, unit_price, expiration_date, bank_deposit, account_number, create_time, update_time from company
+    </sql>
+
+    <select id="selectCompanyList" parameterType="Company" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        <where>  
+            <if test="companyNameCn != null  and companyNameCn != ''"> and company_name_cn = #{companyNameCn}</if>
+            <if test="companyNameEn != null  and companyNameEn != ''"> and company_name_en = #{companyNameEn}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="linkman != null  and linkman != ''"> and linkman = #{linkman}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="expirationDate != null "> and expiration_date = #{expirationDate}</if>
+            <if test="bankDeposit != null  and bankDeposit != ''"> and bank_deposit = #{bankDeposit}</if>
+            <if test="accountNumber != null  and accountNumber != ''"> and account_number = #{accountNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectCompanyById" parameterType="Long" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="id">
+        insert into company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyNameCn != null">company_name_cn,</if>
+            <if test="companyNameEn != null">company_name_en,</if>
+            <if test="logo != null">logo,</if>
+            <if test="linkman != null">linkman,</if>
+            <if test="phone != null">phone,</if>
+            <if test="balance != null">balance,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="expirationDate != null">expiration_date,</if>
+            <if test="bankDeposit != null">bank_deposit,</if>
+            <if test="accountNumber != null">account_number,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyNameCn != null">#{companyNameCn},</if>
+            <if test="companyNameEn != null">#{companyNameEn},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="linkman != null">#{linkman},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="expirationDate != null">#{expirationDate},</if>
+            <if test="bankDeposit != null">#{bankDeposit},</if>
+            <if test="accountNumber != null">#{accountNumber},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompany" parameterType="Company">
+        update company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyNameCn != null">company_name_cn = #{companyNameCn},</if>
+            <if test="companyNameEn != null">company_name_en = #{companyNameEn},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="linkman != null">linkman = #{linkman},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="expirationDate != null">expiration_date = #{expirationDate},</if>
+            <if test="bankDeposit != null">bank_deposit = #{bankDeposit},</if>
+            <if test="accountNumber != null">account_number = #{accountNumber},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCompanyById" parameterType="Long">
+        delete from company where id = #{id}
+    </delete>
+
+    <delete id="deleteCompanyByIds" parameterType="String">
+        delete from company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

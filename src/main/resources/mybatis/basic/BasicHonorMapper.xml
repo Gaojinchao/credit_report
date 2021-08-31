@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicHonorMapper">
+    
+    <resultMap type="BasicHonor" id="BasicHonorResult">
+        <result property="id"    column="id"    />
+        <result property="awardName"    column="award_name"    />
+        <result property="prizeUnit"    column="prize_unit"    />
+        <result property="winningTime"    column="winning_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicHonorVo">
+        select id, award_name, prize_unit, winning_time, create_time, update_time, order_sn from basic_honor
+    </sql>
+
+    <select id="selectBasicHonorList" parameterType="BasicHonor" resultMap="BasicHonorResult">
+        <include refid="selectBasicHonorVo"/>
+        <where>  
+            <if test="awardName != null  and awardName != ''"> and award_name like concat('%', #{awardName}, '%')</if>
+            <if test="prizeUnit != null  and prizeUnit != ''"> and prize_unit = #{prizeUnit}</if>
+            <if test="winningTime != null  and winningTime != ''"> and winning_time = #{winningTime}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicHonorById" parameterType="Long" resultMap="BasicHonorResult">
+        <include refid="selectBasicHonorVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBasicHonorByordersn" parameterType="string" resultMap="BasicHonorResult">
+        <include refid="selectBasicHonorVo"/>
+        where order_sn = #{ordersn}
+    </select>
+        
+    <insert id="insertBasicHonor" parameterType="BasicHonor" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_honor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="awardName != null">award_name,</if>
+            <if test="prizeUnit != null">prize_unit,</if>
+            <if test="winningTime != null">winning_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="awardName != null">#{awardName},</if>
+            <if test="prizeUnit != null">#{prizeUnit},</if>
+            <if test="winningTime != null">#{winningTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicHonor" parameterType="BasicHonor">
+        update basic_honor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="awardName != null">award_name = #{awardName},</if>
+            <if test="prizeUnit != null">prize_unit = #{prizeUnit},</if>
+            <if test="winningTime != null">winning_time = #{winningTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicHonorById" parameterType="Long">
+        delete from basic_honor where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicHonorByIds" parameterType="String">
+        delete from basic_honor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBasicHonorByOrdersn">
+        delete from basic_honor where order_sn=#{ordersn}
+    </delete>
+    
+</mapper>

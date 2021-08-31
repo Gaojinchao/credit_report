@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicShareholderMapper">
+    
+    <resultMap type="BasicShareholder" id="BasicShareholderResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="shouldCapi"    column="should_capi"    />
+        <result property="realCapil"    column="real_capil"    />
+        <result property="shouldScale"    column="should_scale"    />
+        <result property="realScale"    column="real_scale"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicShareholderVo">
+        select id, name, should_capi, real_capil, should_scale, real_scale, create_time, update_time, order_sn from basic_shareholder
+    </sql>
+
+    <select id="selectBasicShareholderList" parameterType="BasicShareholder" resultMap="BasicShareholderResult">
+        <include refid="selectBasicShareholderVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="shouldCapi != null "> and should_capi = #{shouldCapi}</if>
+            <if test="realCapil != null "> and real_capil = #{realCapil}</if>
+            <if test="shouldScale != null "> and should_scale = #{shouldScale}</if>
+            <if test="realScale != null "> and real_scale = #{realScale}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicShareholderById" parameterType="Long" resultMap="BasicShareholderResult">
+        <include refid="selectBasicShareholderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicShareholder" parameterType="BasicShareholder" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_shareholder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="shouldCapi != null">should_capi,</if>
+            <if test="realCapil != null">real_capil,</if>
+            <if test="shouldScale != null">should_scale,</if>
+            <if test="realScale != null">real_scale,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="shouldCapi != null">#{shouldCapi},</if>
+            <if test="realCapil != null">#{realCapil},</if>
+            <if test="shouldScale != null">#{shouldScale},</if>
+            <if test="realScale != null">#{realScale},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicShareholder" parameterType="BasicShareholder">
+        update basic_shareholder
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="shouldCapi != null">should_capi = #{shouldCapi},</if>
+            <if test="realCapil != null">real_capil = #{realCapil},</if>
+            <if test="shouldScale != null">should_scale = #{shouldScale},</if>
+            <if test="realScale != null">real_scale = #{realScale},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicShareholderById" parameterType="Long">
+        delete from basic_shareholder where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicShareholderByIds" parameterType="String">
+        delete from basic_shareholder where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

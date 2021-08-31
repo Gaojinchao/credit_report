@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="basic_copyright" value="true" dbms="mysql"/>
+    <changeSet id="basic_copyright_01" author="alfred.zong" >
+        <createTable tableName="basic_copyright" remarks="著作权">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="number" type="varchar(100)" remarks="注册号" />
+            <column name="first_date" type="varchar(100)" remarks="登记时间" />
+            <column name="name" type="varchar(100)" remarks="著作权名称" />
+            <column name="company" type="varchar(100)" remarks="软件著作人" />
+            <column name="approval_date" type="varchar(100)" remarks="发布时间" />
+            <column name="order_sn" type="varchar(50)" remarks="订单号" />
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

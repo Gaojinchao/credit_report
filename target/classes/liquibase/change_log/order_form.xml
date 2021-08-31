@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="order_form" value="true" dbms="mysql"/>
+    <changeSet id="order_form_01" author="alfred.zong" >
+        <createTable tableName="order_form" remarks="订单表">
+            <column name="id" type="bigint(20)" autoIncrement="true"  remarks="主键" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="enterprise" type="varchar(100)" remarks="企业名称" />
+            <column name="assessment_level" type="varchar(10)" remarks="评估等级" />
+            <column name="region" type="varchar(100)"  remarks="地区" />
+            <column name="territory" type="varchar(100)" remarks="领域" />
+            <column name="industry" type="varchar(100)" remarks="行业" />
+            <column name="linkman" type="varchar(50)" remarks="联系人" />
+            <column name="phone" type="decimal(10,2)" remarks="电话" />
+            <column name="order_sn" type="varchar(50)" remarks="订单号"/>
+            <column name="single_state" type="varchar(100)"  remarks="进单状态"/>
+            <column name="state" type="varchar(100)" remarks="订单状态"/>
+            <column name="assessment_result" remarks="评估结果" type="varchar(20)"/>
+            <column name="cause" remarks="原因" type="varchar(100)" />
+            <column name="user_id" type="bigint(20)" remarks="创建人ID"/>
+            <column name="dept_id" type="bigint(20)" remarks="部门id"/>
+            <column name="company_id" type="bigint(20)" remarks="公司id"/>
+            <column name="create_time" type="datetime" remarks="创建日期"  defaultValueComputed="CURRENT_TIMESTAMP" />
+            <column name="update_time" type="datetime" remarks="更新时间"  defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="order_form_02" author="alfred.zong">
+        <modifyDataType tableName="order_form" columnName="phone" newDataType="varchar(50)"/>
+    </changeSet>
+
+    <changeSet id="order_form_03" author="alfred.zong">
+        <addDefaultValue tableName="order_form" columnName="state"  defaultValue="1"/>
+    </changeSet>
+
+    <changeSet id="order_form_04" author="alfred.zong">
+        <addColumn tableName="order_form">
+            <column name="cash_statement" type="varchar(200)" remarks="现金表"/>
+            <column name="balance_sheet" type="varchar(200)" remarks="负债表"/>
+            <column name="income_statement" type="varchar(200)" remarks="利润表" />
+            <column name="one_date" type="varchar(200)" remarks="上上年" />
+            <column name="two_date" type="varchar(200)" remarks="上年" />
+            <column name="three_date" type="varchar(200)" remarks="今年" />
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

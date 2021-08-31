@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.system.mapper.BehavioralIndicatorMapper">
+    
+    <resultMap type="BehavioralIndicator" id="BehavioralIndicatorResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="operatingGrowthRate"    column="operating_growth_rate"    />
+        <result property="growthRateOperatingProfit"    column="growth_rate_operating_profit"    />
+        <result property="developCapitalAccumulation"    column="develop_capital_accumulation"    />
+        <result property="assetLiabilityRatio"    column="asset_liability_ratio"    />
+        <result property="cashFlowLiabilityRatio"    column="cash_flow_liability_ratio"    />
+        <result property="quickRatio"    column="quick_ratio"    />
+        <result property="timesInterestEarned"    column="times_interest_earned"    />
+        <result property="turnoverTotalCapital"    column="turnover_total_capital"    />
+        <result property="turnoverAccountReceivable"    column="turnover_account_receivable"    />
+        <result property="velocityLiquidAssets"    column="velocity_liquid_assets"    />
+        <result property="returnEquity"    column="return_equity"    />
+        <result property="salesOperatingProfit"    column="sales_operating_profit"    />
+        <result property="earnedProtectionMultiple"    column="earned_protection_multiple"    />
+        <result property="salesBusinessGrowthRate"    column="sales_business_growth_rate"    />
+        <result property="salesOperatingGrowthRate"    column="sales_operating_growth_rate"    />
+        <result property="rateCapitalAccumulation"    column="rate_capital_accumulation"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBehavioralIndicatorVo">
+        select id, code, name, operating_growth_rate, growth_rate_operating_profit, develop_capital_accumulation,
+        asset_liability_ratio, cash_flow_liability_ratio, quick_ratio, times_interest_earned, turnover_total_capital,
+        turnover_account_receivable, velocity_liquid_assets, return_equity, sales_operating_profit, earned_protection_multiple,
+        sales_business_growth_rate, sales_operating_growth_rate, rate_capital_accumulation, create_time, update_time from behavioral_indicator
+    </sql>
+
+    <select id="selectBehavioralIndicatorList" parameterType="BehavioralIndicator" resultMap="BehavioralIndicatorResult">
+        <include refid="selectBehavioralIndicatorVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="operatingGrowthRate != null  and operatingGrowthRate != ''"> and operating_growth_rate = #{operatingGrowthRate}</if>
+            <if test="growthRateOperatingProfit != null  and growthRateOperatingProfit != ''"> and growth_rate_operating_profit = #{growthRateOperatingProfit}</if>
+            <if test="developCapitalAccumulation != null  and developCapitalAccumulation != ''"> and develop_capital_accumulation = #{developCapitalAccumulation}</if>
+            <if test="assetLiabilityRatio != null  and assetLiabilityRatio != ''"> and asset_liability_ratio = #{assetLiabilityRatio}</if>
+            <if test="cashFlowLiabilityRatio != null  and cashFlowLiabilityRatio != ''"> and cash_flow_liability_ratio = #{cashFlowLiabilityRatio}</if>
+            <if test="quickRatio != null  and quickRatio != ''"> and quick_ratio = #{quickRatio}</if>
+            <if test="timesInterestEarned != null  and timesInterestEarned != ''"> and times_interest_earned = #{timesInterestEarned}</if>
+            <if test="turnoverTotalCapital != null  and turnoverTotalCapital != ''"> and turnover_total_capital = #{turnoverTotalCapital}</if>
+            <if test="turnoverAccountReceivable != null  and turnoverAccountReceivable != ''"> and turnover_account_receivable = #{turnoverAccountReceivable}</if>
+            <if test="velocityLiquidAssets != null  and velocityLiquidAssets != ''"> and velocity_liquid_assets = #{velocityLiquidAssets}</if>
+            <if test="returnEquity != null  and returnEquity != ''"> and return_equity = #{returnEquity}</if>
+            <if test="salesOperatingProfit != null  and salesOperatingProfit != ''"> and sales_operating_profit = #{salesOperatingProfit}</if>
+            <if test="earnedProtectionMultiple != null  and earnedProtectionMultiple != ''"> and earned_protection_multiple = #{earnedProtectionMultiple}</if>
+            <if test="salesBusinessGrowthRate != null  and salesBusinessGrowthRate != ''"> and sales_business_growth_rate = #{salesBusinessGrowthRate}</if>
+            <if test="salesOperatingGrowthRate != null  and salesOperatingGrowthRate != ''"> and sales_operating_growth_rate = #{salesOperatingGrowthRate}</if>
+            <if test="rateCapitalAccumulation != null  and rateCapitalAccumulation != ''"> and rate_capital_accumulation = #{rateCapitalAccumulation}</if>
+        </where>
+    </select>
+
+    <select id="selectBehavioralIndicatorById" parameterType="Long" resultMap="BehavioralIndicatorResult">
+        <include refid="selectBehavioralIndicatorVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBehavioralIndicatorByCode"  parameterType="string" resultMap="BehavioralIndicatorResult">
+        <include refid="selectBehavioralIndicatorVo"/>
+        where code = #{code}
+    </select>
+        
+    <insert id="insertBehavioralIndicator" parameterType="BehavioralIndicator" useGeneratedKeys="true" keyProperty="id">
+        insert into behavioral_indicator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="operatingGrowthRate != null">operating_growth_rate,</if>
+            <if test="growthRateOperatingProfit != null">growth_rate_operating_profit,</if>
+            <if test="developCapitalAccumulation != null">develop_capital_accumulation,</if>
+            <if test="assetLiabilityRatio != null">asset_liability_ratio,</if>
+            <if test="cashFlowLiabilityRatio != null">cash_flow_liability_ratio,</if>
+            <if test="quickRatio != null">quick_ratio,</if>
+            <if test="timesInterestEarned != null">times_interest_earned,</if>
+            <if test="turnoverTotalCapital != null">turnover_total_capital,</if>
+            <if test="turnoverAccountReceivable != null">turnover_account_receivable,</if>
+            <if test="velocityLiquidAssets != null">velocity_liquid_assets,</if>
+            <if test="returnEquity != null">return_equity,</if>
+            <if test="salesOperatingProfit != null">sales_operating_profit,</if>
+            <if test="earnedProtectionMultiple != null">earned_protection_multiple,</if>
+            <if test="salesBusinessGrowthRate != null">sales_business_growth_rate,</if>
+            <if test="salesOperatingGrowthRate != null">sales_operating_growth_rate,</if>
+            <if test="rateCapitalAccumulation != null">rate_capital_accumulation,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="operatingGrowthRate != null">#{operatingGrowthRate},</if>
+            <if test="growthRateOperatingProfit != null">#{growthRateOperatingProfit},</if>
+            <if test="developCapitalAccumulation != null">#{developCapitalAccumulation},</if>
+            <if test="assetLiabilityRatio != null">#{assetLiabilityRatio},</if>
+            <if test="cashFlowLiabilityRatio != null">#{cashFlowLiabilityRatio},</if>
+            <if test="quickRatio != null">#{quickRatio},</if>
+            <if test="timesInterestEarned != null">#{timesInterestEarned},</if>
+            <if test="turnoverTotalCapital != null">#{turnoverTotalCapital},</if>
+            <if test="turnoverAccountReceivable != null">#{turnoverAccountReceivable},</if>
+            <if test="velocityLiquidAssets != null">#{velocityLiquidAssets},</if>
+            <if test="returnEquity != null">#{returnEquity},</if>
+            <if test="salesOperatingProfit != null">#{salesOperatingProfit},</if>
+            <if test="earnedProtectionMultiple != null">#{earnedProtectionMultiple},</if>
+            <if test="salesBusinessGrowthRate != null">#{salesBusinessGrowthRate},</if>
+            <if test="salesOperatingGrowthRate != null">#{salesOperatingGrowthRate},</if>
+            <if test="rateCapitalAccumulation != null">#{rateCapitalAccumulation},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBehavioralIndicator" parameterType="BehavioralIndicator">
+        update behavioral_indicator
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="operatingGrowthRate != null">operating_growth_rate = #{operatingGrowthRate},</if>
+            <if test="growthRateOperatingProfit != null">growth_rate_operating_profit = #{growthRateOperatingProfit},</if>
+            <if test="developCapitalAccumulation != null">develop_capital_accumulation = #{developCapitalAccumulation},</if>
+            <if test="assetLiabilityRatio != null">asset_liability_ratio = #{assetLiabilityRatio},</if>
+            <if test="cashFlowLiabilityRatio != null">cash_flow_liability_ratio = #{cashFlowLiabilityRatio},</if>
+            <if test="quickRatio != null">quick_ratio = #{quickRatio},</if>
+            <if test="timesInterestEarned != null">times_interest_earned = #{timesInterestEarned},</if>
+            <if test="turnoverTotalCapital != null">turnover_total_capital = #{turnoverTotalCapital},</if>
+            <if test="turnoverAccountReceivable != null">turnover_account_receivable = #{turnoverAccountReceivable},</if>
+            <if test="velocityLiquidAssets != null">velocity_liquid_assets = #{velocityLiquidAssets},</if>
+            <if test="returnEquity != null">return_equity = #{returnEquity},</if>
+            <if test="salesOperatingProfit != null">sales_operating_profit = #{salesOperatingProfit},</if>
+            <if test="earnedProtectionMultiple != null">earned_protection_multiple = #{earnedProtectionMultiple},</if>
+            <if test="salesBusinessGrowthRate != null">sales_business_growth_rate = #{salesBusinessGrowthRate},</if>
+            <if test="salesOperatingGrowthRate != null">sales_operating_growth_rate = #{salesOperatingGrowthRate},</if>
+            <if test="rateCapitalAccumulation != null">rate_capital_accumulation = #{rateCapitalAccumulation},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBehavioralIndicatorById" parameterType="Long">
+        delete from behavioral_indicator where id = #{id}
+    </delete>
+
+    <delete id="deleteBehavioralIndicatorByIds" parameterType="String">
+        delete from behavioral_indicator where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

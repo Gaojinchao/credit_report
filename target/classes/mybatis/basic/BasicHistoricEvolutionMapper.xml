@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.basic.mapper.BasicHistoricEvolutionMapper">
+    
+    <resultMap type="BasicHistoricEvolution" id="BasicHistoricEvolutionResult">
+        <result property="id"    column="id"    />
+        <result property="changeDate"    column="change_date"    />
+        <result property="afterContent"    column="after_content"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderSn"    column="order_sn"    />
+    </resultMap>
+
+    <sql id="selectBasicHistoricEvolutionVo">
+        select id, change_date, after_content, create_time, update_time, order_sn from basic_historic_evolution
+    </sql>
+
+    <select id="selectBasicHistoricEvolutionList" parameterType="BasicHistoricEvolution" resultMap="BasicHistoricEvolutionResult">
+        <include refid="selectBasicHistoricEvolutionVo"/>
+        <where>  
+            <if test="changeDate != null  and changeDate != ''"> and change_date = #{changeDate}</if>
+            <if test="afterContent != null "> and after_content = #{afterContent}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+        </where>
+    </select>
+    
+    <select id="selectBasicHistoricEvolutionById" parameterType="Long" resultMap="BasicHistoricEvolutionResult">
+        <include refid="selectBasicHistoricEvolutionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBasicHistoricEvolution" parameterType="BasicHistoricEvolution" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_historic_evolution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="changeDate != null">change_date,</if>
+            <if test="afterContent != null">after_content,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderSn != null">order_sn,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="changeDate != null">#{changeDate},</if>
+            <if test="afterContent != null">#{afterContent},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBasicHistoricEvolution" parameterType="BasicHistoricEvolution">
+        update basic_historic_evolution
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="changeDate != null">change_date = #{changeDate},</if>
+            <if test="afterContent != null">after_content = #{afterContent},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBasicHistoricEvolutionById" parameterType="Long">
+        delete from basic_historic_evolution where id = #{id}
+    </delete>
+
+    <delete id="deleteBasicHistoricEvolutionByIds" parameterType="String">
+        delete from basic_historic_evolution where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

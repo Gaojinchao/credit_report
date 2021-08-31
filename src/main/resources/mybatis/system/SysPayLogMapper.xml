@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipaisi.project.system.mapper.SysPayLogMapper">
+    
+    <resultMap type="com.saipaisi.project.system.domain.SysPayLog" id="SysPayLogResult">
+        <result property="id"    column="id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="paySn"    column="pay_sn"    />
+        <result property="orderSn"    column="order_sn"    />
+        <result property="totalMoney"    column="total_money"    />
+        <result property="discountsMoney"    column="discounts_money"    />
+        <result property="buyType"    column="buy_type"    />
+        <result property="payTime"    column="pay_time"    />
+    </resultMap>
+
+    <sql id="selectSysPayLogVo">
+        select id, u_id, pay_type, pay_sn, order_sn, total_money, discounts_money, buy_type, pay_time from sys_pay_log
+    </sql>
+
+    <select id="selectSysPayLogList" parameterType="com.saipaisi.project.system.domain.SysPayLog" resultMap="SysPayLogResult">
+        <include refid="selectSysPayLogVo"/>
+        <where>  
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="payType != null  and payType != ''"> and pay_type = #{payType}</if>
+            <if test="paySn != null  and paySn != ''"> and pay_sn = #{paySn}</if>
+            <if test="orderSn != null  and orderSn != ''"> and order_sn = #{orderSn}</if>
+            <if test="totalMoney != null "> and total_money = #{totalMoney}</if>
+            <if test="discountsMoney != null "> and discounts_money = #{discountsMoney}</if>
+            <if test="buyType != null  and buyType != ''"> and buy_type = #{buyType}</if>
+            <if test="payTime != null "> and pay_time = #{payTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysPayLogById" parameterType="Long" resultMap="SysPayLogResult">
+        <include refid="selectSysPayLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysPayLog" parameterType="com.saipaisi.project.system.domain.SysPayLog" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_pay_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uId != null">u_id,</if>
+            <if test="payType != null">pay_type,</if>
+            <if test="paySn != null">pay_sn,</if>
+            <if test="orderSn != null">order_sn,</if>
+            <if test="totalMoney != null">total_money,</if>
+            <if test="discountsMoney != null">discounts_money,</if>
+            <if test="buyType != null">buy_type,</if>
+            <if test="payTime != null">pay_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uId != null">#{uId},</if>
+            <if test="payType != null">#{payType},</if>
+            <if test="paySn != null">#{paySn},</if>
+            <if test="orderSn != null">#{orderSn},</if>
+            <if test="totalMoney != null">#{totalMoney},</if>
+            <if test="discountsMoney != null">#{discountsMoney},</if>
+            <if test="buyType != null">#{buyType},</if>
+            <if test="payTime != null">#{payTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysPayLog" parameterType="com.saipaisi.project.system.domain.SysPayLog">
+        update sys_pay_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="paySn != null">pay_sn = #{paySn},</if>
+            <if test="orderSn != null">order_sn = #{orderSn},</if>
+            <if test="totalMoney != null">total_money = #{totalMoney},</if>
+            <if test="discountsMoney != null">discounts_money = #{discountsMoney},</if>
+            <if test="buyType != null">buy_type = #{buyType},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysPayLogById" parameterType="Long">
+        delete from sys_pay_log where id = #{id}
+    </delete>
+
+    <delete id="deleteSysPayLogByIds" parameterType="String">
+        delete from sys_pay_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
